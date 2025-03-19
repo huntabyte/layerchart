@@ -12,7 +12,7 @@
       return (
         key.startsWith('curve') &&
         (showOpenClosed ? true : !key.endsWith('Open') && !key.endsWith('Closed')) &&
-        !key.includes('Bundle') // Not compatibile with area
+        !key.includes('Bundle') // Not compatible with area
       );
     })
     .map(([key, value]) => {

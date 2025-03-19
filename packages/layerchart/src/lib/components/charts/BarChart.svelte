@@ -124,7 +124,7 @@
   import { createSelectionState } from 'layerchart/stores/selectionState.svelte.js';
 
   let {
-    data = [],
+    data,
     x: xProp,
     y: yProp,
     xDomain,
