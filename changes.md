@@ -1,5 +1,7 @@
 # Changes
 
+(WIP)
+
 ## Slots -> Snippets
 
 [Snippets](https://svelte.dev/docs/svelte/snippet) are a new feature in Svelte 5 that replaces slots with a more powerful, composable, and flexible API. Although snippets require a couple extra lines of code, they are more powerful, typeable, and flexible.
