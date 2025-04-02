@@ -279,6 +279,25 @@
   </div>
 </Preview>
 
+<h2>Legend (series)</h2>
+
+<Preview data={dataByYear}>
+  <div class="h-[300px] p-4 border rounded-sm resize overflow-auto">
+    <PieChart
+      key="fruit"
+      value="value"
+      series={Array.from(dataByYear, ([key, data]) => ({ key: key.toString(), data }))}
+      outerRadius={-25}
+      innerRadius={-20}
+      cornerRadius={5}
+      padAngle={0.01}
+      {renderContext}
+      {debug}
+      legend
+    />
+  </div>
+</Preview>
+
 <h2>Customize colors (CSS variables)</h2>
 
 <Preview {data}>

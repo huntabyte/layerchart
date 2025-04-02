@@ -320,6 +320,9 @@
       return seriesState.visibleSeries;
     },
   });
+
+  const Component = $derived(renderContext === 'canvas' ? Canvas : Svg);
+  const componentProps = $derived(renderContext === 'canvas' ? props.canvas : props.svg);
 </script>
 
 <!-- svelte-ignore ownership_invalid_binding -->
@@ -376,13 +379,7 @@
       {@render childrenProp(snippetProps)}
     {:else}
       {@render belowContext?.(snippetProps)}
-      {@const Component = renderContext === 'canvas' ? Canvas : Svg}
-      <Component
-        this={renderContext === 'canvas' ? Canvas : Svg}
-        {...asAny(renderContext === 'canvas' ? props.canvas : props.svg)}
-        center={radial}
-        {debug}
-      >
+      <Component {...asAny(componentProps)} center={radial} {debug}>
         {#if typeof grid === 'function'}
           {@render grid(snippetProps)}
         {:else if grid}

@@ -163,8 +163,8 @@
 
   let {
     ref = $bindable(),
-    canvasContext: context = $bindable(),
     willReadFrequently = false,
+    canvasContext: canvasContextProp = $bindable(),
     debug = false,
     zIndex = 0,
     pointerEvents = true,
@@ -182,6 +182,12 @@
     ontouchmove,
     ...restProps
   }: CanvasProps = $props();
+
+  let context = $state<CanvasRenderingContext2D>();
+
+  $effect.pre(() => {
+    canvasContextProp = context;
+  });
 
   const ctx = getChartContext();
   const transformCtx = getTransformContext();

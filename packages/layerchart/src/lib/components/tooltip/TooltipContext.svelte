@@ -493,6 +493,7 @@
     debug && triggerPointerEvents && 'bg-danger/10 outline outline-danger'
   )}
   onpointerenter={(e) => {
+    console.log('isHoveringTooltip = true');
     isHoveringTooltip = true;
     if (triggerPointerEvents) {
       showTooltip(e);
@@ -504,6 +505,7 @@
     }
   }}
   onpointerleave={(e) => {
+    console.log('isHoveringTooltip = false');
     isHoveringTooltip = false;
     hideTooltip();
   }}

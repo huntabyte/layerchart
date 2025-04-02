@@ -239,6 +239,8 @@
     seriesProp === undefined ? [{ key: 'default', value: value }] : seriesProp
   );
 
+  const isDefaultSeries = $derived(series.length === 1 && series[0].key === 'default');
+
   const keyAccessor = $derived(accessor(key));
   const labelAccessor = $derived(accessor(label));
   const valueAccessor = $derived(accessor(value));
