@@ -95,9 +95,10 @@
   import { asAny } from '$lib/utils/types.js';
   import Spline from '../Spline.svelte';
   import type { SeriesData, SimplifiedChartProps, SimplifiedChartPropsObject } from './types.js';
-  import { createLegendProps, createSeriesState } from './utils.svelte.js';
+  import { createLegendProps, createLegendProps2, createSeriesState } from './utils.svelte.js';
   import { setTooltipMetaContext } from '../tooltip/tooltipMetaContext.js';
   import DefaultTooltip from './DefaultTooltip.svelte';
+  import Legend2 from '../legend/Legend2.svelte';
 
   let {
     data = [],
@@ -528,7 +529,16 @@
       {#if typeof legend === 'function'}
         {@render legend(snippetProps)}
       {:else if legend}
-        <Legend {...getLegendProps()} />
+        <!-- <Legend {...getLegendProps()} /> -->
+        <Legend2
+          {...createLegendProps2({
+            seriesState,
+            props: {
+              ...props.legend,
+              ...(typeof legend === 'object' ? legend : null),
+            },
+          })}
+        />
       {/if}
 
       {#if typeof tooltip === 'function'}

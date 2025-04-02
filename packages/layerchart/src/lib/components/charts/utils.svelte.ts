@@ -3,6 +3,7 @@ import type { SeriesData } from './types.js';
 import { createSelectionState } from '$lib/stores/selectionState.svelte.js';
 import type Legend from '../Legend.svelte';
 import { scaleOrdinal } from 'd3-scale';
+import type Legend2 from '../legend/Legend2.svelte';
 
 export function createHighlightKey<TData, SeriesComponent extends Component>() {
   let current = $state<SeriesData<TData, SeriesComponent>['key'] | null>(null);
@@ -84,6 +85,7 @@ export function createLegendProps<TData, TComponent extends Component>(
           opts.seriesState.series.map((s) => s.key),
           opts.seriesState.series.map((s) => s.color)
         ),
+
     tickFormat: (key) => opts.seriesState.series.find((s) => s.key === key)?.label ?? key,
     placement: 'bottom',
     variant: 'swatches',
@@ -95,6 +97,45 @@ export function createLegendProps<TData, TComponent extends Component>(
       item: (item) =>
         opts.seriesState.visibleSeries.length &&
         !opts.seriesState.visibleSeries.some((s) => s.key === item.value)
+          ? 'opacity-50'
+          : '',
+      ...opts.props?.classes,
+    },
+  };
+}
+
+type CreateLegend2PropsOptions<TData, TComponent extends Component> = {
+  seriesState: ReturnType<typeof createSeriesState<TData, TComponent>>;
+  props: Partial<ComponentProps<typeof Legend2>>;
+};
+
+export function createLegendProps2<TData, TComponent extends Component>(
+  opts: CreateLegend2PropsOptions<TData, TComponent>
+): ComponentProps<typeof Legend2> {
+  return {
+    scale: opts.seriesState.isDefaultSeries
+      ? undefined
+      : scaleOrdinal(
+          opts.seriesState.series.map((s) => s.key),
+          opts.seriesState.series.map((s) => s.color)
+        ),
+    tickFormat: (key) => opts.seriesState.series.find((s) => s.key === key)?.label ?? key,
+    placement: 'bottom',
+    variant: 'swatches',
+    onLegendInteract: (payload) => {
+      if (payload.type === 'click') {
+        opts.seriesState.selectedSeries.toggleSelected(payload.item.id);
+      } else if (payload.type === 'mouseover') {
+        opts.seriesState.highlightKey.current = payload.item.id;
+      } else if (payload.type === 'mouseout') {
+        opts.seriesState.highlightKey.current = null;
+      }
+    },
+    ...opts.props,
+    classes: {
+      item: (i) =>
+        opts.seriesState.visibleSeries.length &&
+        !opts.seriesState.visibleSeries.some((s) => s.key === i.dataKey)
           ? 'opacity-50'
           : '',
       ...opts.props?.classes,
