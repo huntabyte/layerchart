@@ -163,8 +163,8 @@
 
   let {
     ref = $bindable(),
-    willReadFrequently = false,
     canvasContext: canvasContextProp = $bindable(),
+    willReadFrequently = false,
     debug = false,
     zIndex = 0,
     pointerEvents = true,
